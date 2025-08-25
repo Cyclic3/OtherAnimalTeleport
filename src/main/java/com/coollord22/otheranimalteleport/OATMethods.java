@@ -3,11 +3,11 @@ package com.coollord22.otheranimalteleport;
 import org.bukkit.Chunk;
 import org.bukkit.Location;
 import org.bukkit.entity.Entity;
-import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitRunnable;
+import io.papermc.paper.entity.Leashable;
 
 import com.coollord22.otheranimalteleport.assets.Verbosity;
 
@@ -22,10 +22,10 @@ public class OATMethods {
 		}
 
 		plugin.log.logInfo(entID + "Attempting to null the leash holder.", Verbosity.HIGHEST);
-		((LivingEntity) ent).setLeashHolder(null);
+		((Leashable) ent).setLeashHolder(null);
 
 		boolean invulnerable = ent.isInvulnerable();
-		
+
 		new BukkitRunnable() {
 			@Override
 			public void run() {
@@ -36,7 +36,7 @@ public class OATMethods {
 				ent.teleport(to);
 
 				plugin.log.logInfo(entID + "Re-attaching leash holder as " + p.getName() + ".", Verbosity.HIGHEST);
-				((LivingEntity) ent).setLeashHolder(p);
+				((Leashable) ent).setLeashHolder(p);
 
 				if(plugin.toUseTickets) {
 					fromChunk.removePluginChunkTicket(plugin);

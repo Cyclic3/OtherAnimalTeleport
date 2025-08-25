@@ -3,6 +3,9 @@ package com.coollord22.otheranimalteleport.listeners;
 import com.coollord22.otheranimalteleport.OATMethods;
 import com.coollord22.otheranimalteleport.OtherAnimalTeleport;
 import com.coollord22.otheranimalteleport.assets.Verbosity;
+
+import io.papermc.paper.entity.Leashable;
+
 import org.bukkit.entity.*;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -51,11 +54,11 @@ public class OATListeners implements Listener {
 						plugin.log.logInfo(entID + "Found a(n) " + ent.getType() + ". Checking if type is allowed...", Verbosity.HIGH);
 						if(plugin.config.entityMap.get(ent.getType()) != null && plugin.config.entityMap.get(ent.getType())) {
 							plugin.log.logInfo(entID + "Entity-type check passed, checking for leashed status...", Verbosity.HIGHEST);
-							if(ent instanceof LivingEntity && ((LivingEntity) ent).isLeashed()) {
+							if(ent instanceof Leashable && ((Leashable) ent).isLeashed()) {
 								plugin.log.logInfo(entID + "Entity was leashed, checking player permissions...", Verbosity.HIGHEST);
 								if(event.getPlayer().hasPermission("otheranimalteleport.player.teleportleashed")) {
 									plugin.log.logInfo(entID + "Player permissions passed, checking leash holder...", Verbosity.HIGHEST);
-									if(((LivingEntity) ent).getLeashHolder().equals(event.getPlayer())) {
+									if(((Leashable) ent).getLeashHolder().equals(event.getPlayer())) {
 										try {
 											plugin.log.logInfo(entID + "Leash holder passed. Attempting to teleport entity.", Verbosity.HIGH);
 											OATMethods.teleportLeashedEnt(ent, event.getFrom(), event.getTo(), event.getPlayer(), plugin);
